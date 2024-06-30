@@ -2,9 +2,10 @@ import tkinter as tk
 import tkinter.font as tkfont
 from tkinter.filedialog import askopenfilename
 from compare_audio import audio_comparator
-
+from extract_notes import extractor
+from PIL import Image, ImageTk
 audio_list = {}
-
+global_image_list = []
 class dhunApp(tk.Tk):
     def __init__(self):
         tk.Tk.__init__(self)
@@ -77,6 +78,8 @@ class ComparePage(tk.Frame):
         self.result.pack()
     def compare(self):
         temp = list(audio_list.keys())
+        if len(temp) == 1:
+            temp.append(temp[0])
         file_1 = temp[0]
         file_2 = temp[1]
         self.result["text"] = "The two songs are :" + str(audio_comparator(file_1=file_1, file_2=file_2)) + "%" + " similar.\n"
@@ -86,21 +89,91 @@ class AudioPageOne(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
-        label = tk.Label(self, text="This is page 2", font=controller.title_font)
+        self.FRAME_COUNT = 100
+        self.cur = 0
+        label = tk.Label(self, text="Frame-Wise Dominant Notes : Audio 1", font=controller.title_font)
         label.pack(side="top", fill="x", pady=10)
         button = tk.Button(self, text="Go to the start page",
                            command=lambda: controller.show_frame("StartPage"))
+        btn_extract = tk.Button(self, text="Initiate Extraction", command = self.extract)
+        self.image_label = tk.Label(self)
+        btn_next = tk.Button(self, text = "Next Image", command = self.next_image)
+        btn_prev = tk.Button(self, text = "Previous Image", command = self.prev_image)
         button.pack()
+        btn_extract.pack()
+        btn_next.pack()
+        btn_prev.pack()
+        self.image_label.pack()
+    def extract(self):
+        temp = list(audio_list.keys())
+        file = temp[0]
+        self.FRAME_COUNT = extractor(filepath=file)
+        self.image_label.config(image=ImageTk.PhotoImage(Image.open("content\\frame0.png")))
+        global_image_list.append(ImageTk.PhotoImage(Image.open("content\\frame0.png")))
+    def next_image(self):
+        if self.cur == self.FRAME_COUNT - 1:
+            self.cur = 0
+        else:
+            self.cur += 1
+        im = Image.open(f"content\\frame{self.cur}.png")
+        ph = ImageTk.PhotoImage(image = im)
+        self.image_label.config(image=ph)
+        global_image_list.append(ph)
+    def prev_image(self):
+        if self.cur == 0:
+            self.cur = self.FRAME_COUNT - 1
+        else:
+            self.cur -= 1
+        im = Image.open(f"content\\frame{self.cur}.png")
+        ph = ImageTk.PhotoImage(image = im)
+        self.image_label.config(image=ph)
+        global_image_list.append(ph)
 
 class AudioPageTwo(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
-        label = tk.Label(self, text="This is page 3", font=controller.title_font)
+        self.FRAME_COUNT = 100
+        self.cur = 0
+        label = tk.Label(self, text="Frame-Wise Dominant Notes : Audio 2", font=controller.title_font)
         label.pack(side="top", fill="x", pady=10)
         button = tk.Button(self, text="Go to the start page",
                            command=lambda: controller.show_frame("StartPage"))
+        btn_extract = tk.Button(self, text="Initiate Extraction", command = self.extract)
+        self.image_label = tk.Label(self)
+        btn_next = tk.Button(self, text = "Next Image", command = self.next_image)
+        btn_prev = tk.Button(self, text = "Previous Image", command = self.prev_image)
         button.pack()
+        btn_extract.pack()
+        btn_next.pack()
+        btn_prev.pack()
+        self.image_label.pack()
+    def extract(self):
+        temp = list(audio_list.keys())
+        if len(temp) == 1:
+            temp.append(temp[0])
+        file = temp[1]
+        self.FRAME_COUNT = extractor(filepath=file)
+        self.image_label.config(image=ImageTk.PhotoImage(Image.open("content\\frame0.png")))
+        global_image_list.append(ImageTk.PhotoImage(Image.open("content\\frame0.png")))
+    def next_image(self):
+        if self.cur == self.FRAME_COUNT - 1:
+            self.cur = 0
+        else:
+            self.cur += 1
+        im = Image.open(f"content\\frame{self.cur}.png")
+        ph = ImageTk.PhotoImage(image = im)
+        self.image_label.config(image=ph)
+        global_image_list.append(ph)
+    def prev_image(self):
+        if self.cur == 0:
+            self.cur = self.FRAME_COUNT - 1
+        else:
+            self.cur -= 1
+        im = Image.open(f"content\\frame{self.cur}.png")
+        ph = ImageTk.PhotoImage(image = im)
+        self.image_label.config(image=ph)
+        global_image_list.append(ph)
 
 if __name__ == "__main__":
     app = dhunApp()

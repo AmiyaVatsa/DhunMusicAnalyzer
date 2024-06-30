@@ -15,7 +15,7 @@ def plot_fft(data, xt, notes, dimensions=(960,540), MINIMUM_FREQ = 10, MAXIMUM_F
       height=dimensions[1],
       xaxis_title="Frequency (note)",
       yaxis_title="Magnitude",
-      font={'size' : 24}
+      font={'size' : 8}
   )
 
   fig = go.Figure(layout=layout,
@@ -30,7 +30,7 @@ def plot_fft(data, xt, notes, dimensions=(960,540), MINIMUM_FREQ = 10, MAXIMUM_F
   for note in notes:
     fig.add_annotation(x=note[0]+10, y=note[2],
             text=note[1],
-            font = {'size' : 48},
+            font = {'size' : 10},
             showarrow=False)
   return fig
 
@@ -87,7 +87,7 @@ def extractor(filepath : str):
   MAXIMUM_FREQ = 1500
   DOMINANT_NOTES = 3
   NOTES = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"] # C MAJOR SCALE
-  RES = (1920, 1080)
+  RES = (400, 300)
   SCALE = 2
   # File path and loading
   raw_audio, sr = librosa.load(filepath)
@@ -112,7 +112,7 @@ def extractor(filepath : str):
     mx = max(np.max(fft),mx)
 
   print(f"Max amplitude: {mx}")
-
+  print(FRAME_COUNT)
   # Pass 2, produce the animation
   for frame_number in tqdm.tqdm(range(FRAME_COUNT)):
     sample = extract_sample(raw_audio, frame_number, FRAME_OFFSET=FRAME_OFFSET, FFT_WINDOW=FFT_WINDOW)
@@ -124,6 +124,7 @@ def extractor(filepath : str):
 
     fig = plot_fft(fft.real,xf,s,RES, MINIMUM_FREQ=MINIMUM_FREQ, MAXIMUM_FREQ=MAXIMUM_FREQ)
     fig.write_image(f"content\\frame{frame_number}.png",scale=2)
+  return FRAME_COUNT
 
 
 if __name__ == "__main__":
