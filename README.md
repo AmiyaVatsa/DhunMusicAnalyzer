@@ -16,6 +16,21 @@ Then run
  ```bash
 python app.py
 ```
+Which leads to this screen
+
+![image](https://github.com/AmiyaVatsa/DhunMusicAnalyzer/assets/97239839/c56037f0-2238-4665-a5fa-40ca2e8f62f3)
+
+Pick audio samples.
+
+![image](https://github.com/AmiyaVatsa/DhunMusicAnalyzer/assets/97239839/e9fa9296-6015-4724-94fc-a925552756c7)
+
+Compare them.
+
+![image](https://github.com/AmiyaVatsa/DhunMusicAnalyzer/assets/97239839/979f75cb-6242-4c12-a205-25166f9a1a0d)
+
+And see frame-wise dominant notes
+
+![image](https://github.com/AmiyaVatsa/DhunMusicAnalyzer/assets/97239839/5b2f076b-5657-4d5a-b9a4-8eda118e067b)
 
 ## Contributing
 
