@@ -1,5 +1,7 @@
 import tkinter as tk
 import tkinter.font as tkfont
+from tkinter import ttk
+from ttkthemes import ThemedTk, ThemedStyle
 from tkinter.filedialog import askopenfilename
 from compare_audio import audio_comparator
 from extract_notes import extractor
@@ -9,8 +11,10 @@ global_image_list = []
 class dhunApp(tk.Tk):
     def __init__(self):
         tk.Tk.__init__(self)
+        style = ThemedStyle()
+        style.theme_use('black')
         self.title_font = tkfont.Font(family='Helvetica', size=18, weight="bold", slant="italic")
-        container = tk.Frame(self)
+        container = ttk.Frame(self)
         container.pack(side="top", fill="both", expand=True)
         container.grid_rowconfigure(0, weight=1)
         container.grid_columnconfigure(0, weight=1)
@@ -35,16 +39,16 @@ class dhunApp(tk.Tk):
 
 class StartPage(tk.Frame):
     def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
+        ttk.Frame.__init__(self, parent)
         self.controller = controller
-        label = tk.Label(self, text="Music Analyzer App", font=controller.title_font)
-        label.pack(side="top", fill="x", pady=10)
-        btn_open_file = tk.Button(self, text = "Choose an Audio", command = self.open_file)
-        self.audio_names = tk.Label(self, text="Audio Selected:-\n")
-        btn_compare = tk.Button(self, text = "Compare Audios", command = lambda: controller.show_frame("ComparePage"))
-        btn_extract_notes_one = tk.Button(self, text= "Extract Notes from first audio", command = lambda: controller.show_frame("AudioPageOne")) 
-        btn_extract_notes_two = tk.Button(self, text= "Extract Notes from second audio", command = lambda: controller.show_frame("AudioPageTwo")) 
-        btn_clear_list = tk.Button(self, text="Clear", command=self.clear)
+        label = ttk.Label(self, text="Music Analyzer App", font=controller.title_font, justify='center')
+        label.pack()
+        btn_open_file = ttk.Button(self, text = "Choose an Audio", command = self.open_file)
+        self.audio_names = ttk.Label(self, text="Audio Selected:-\n")
+        btn_compare = ttk.Button(self, text = "Compare Audios", command = lambda: controller.show_frame("ComparePage"))
+        btn_extract_notes_one = ttk.Button(self, text= "Extract Notes from first audio", command = lambda: controller.show_frame("AudioPageOne")) 
+        btn_extract_notes_two = ttk.Button(self, text= "Extract Notes from second audio", command = lambda: controller.show_frame("AudioPageTwo")) 
+        btn_clear_list = ttk.Button(self, text="Clear", command=self.clear)
         btn_open_file.pack()
         btn_compare.pack()
         btn_extract_notes_one.pack()
@@ -65,13 +69,13 @@ class StartPage(tk.Frame):
 
 class ComparePage(tk.Frame):
     def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
+        ttk.Frame.__init__(self, parent)
         self.controller = controller
-        label = tk.Label(self, text="Audio Comparison", font=controller.title_font)
-        label.pack(side="top", fill="x", pady=10)
-        btn_compare = tk.Button(self, text="Initiate Comparison", command=self.compare)
-        self.result = tk.Label(self)
-        button = tk.Button(self, text="Go to the start page",
+        label = ttk.Label(self, text="Audio Comparison", font=controller.title_font)
+        label.pack()
+        btn_compare = ttk.Button(self, text="Initiate Comparison", command=self.compare)
+        self.result = ttk.Label(self)
+        button = ttk.Button(self, text="Go to the start page",
                            command=lambda: controller.show_frame("StartPage"))
         button.pack()
         btn_compare.pack()
@@ -87,18 +91,18 @@ class ComparePage(tk.Frame):
 
 class AudioPageOne(tk.Frame):
     def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
+        ttk.Frame.__init__(self, parent)
         self.controller = controller
         self.FRAME_COUNT = 100
         self.cur = 0
-        label = tk.Label(self, text="Frame-Wise Dominant Notes : Audio 1", font=controller.title_font)
-        label.pack(side="top", fill="x", pady=10)
-        button = tk.Button(self, text="Go to the start page",
+        label = ttk.Label(self, text="Frame-Wise Dominant Notes : Audio 1", font=controller.title_font)
+        label.pack()
+        button = ttk.Button(self, text="Go to the start page",
                            command=lambda: controller.show_frame("StartPage"))
-        btn_extract = tk.Button(self, text="Initiate Extraction", command = self.extract)
-        self.image_label = tk.Label(self)
-        btn_next = tk.Button(self, text = "Next Image", command = self.next_image)
-        btn_prev = tk.Button(self, text = "Previous Image", command = self.prev_image)
+        btn_extract = ttk.Button(self, text="Initiate Extraction", command = self.extract)
+        self.image_label = ttk.Label(self)
+        btn_next = ttk.Button(self, text = "Next Image", command = self.next_image)
+        btn_prev = ttk.Button(self, text = "Previous Image", command = self.prev_image)
         button.pack()
         btn_extract.pack()
         btn_next.pack()
@@ -131,18 +135,18 @@ class AudioPageOne(tk.Frame):
 
 class AudioPageTwo(tk.Frame):
     def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
+        ttk.Frame.__init__(self, parent)
         self.controller = controller
         self.FRAME_COUNT = 100
         self.cur = 0
-        label = tk.Label(self, text="Frame-Wise Dominant Notes : Audio 2", font=controller.title_font)
-        label.pack(side="top", fill="x", pady=10)
-        button = tk.Button(self, text="Go to the start page",
+        label = ttk.Label(self, text="Frame-Wise Dominant Notes : Audio 2", font=controller.title_font)
+        label.pack()
+        button = ttk.Button(self, text="Go to the start page",
                            command=lambda: controller.show_frame("StartPage"))
-        btn_extract = tk.Button(self, text="Initiate Extraction", command = self.extract)
-        self.image_label = tk.Label(self)
-        btn_next = tk.Button(self, text = "Next Image", command = self.next_image)
-        btn_prev = tk.Button(self, text = "Previous Image", command = self.prev_image)
+        btn_extract = ttk.Button(self, text="Initiate Extraction", command = self.extract)
+        self.image_label = ttk.Label(self)
+        btn_next = ttk.Button(self, text = "Next Image", command = self.next_image)
+        btn_prev = ttk.Button(self, text = "Previous Image", command = self.prev_image)
         button.pack()
         btn_extract.pack()
         btn_next.pack()
