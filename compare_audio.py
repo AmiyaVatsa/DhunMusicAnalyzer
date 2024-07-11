@@ -9,7 +9,7 @@ import IPython.display as ipd
 def audio_comparator(file_1 : str, file_2 : str):
     #loading files
     audio_1, sr = librosa.load(file_1)
-    audio_2, _ = librosa.load(file_2, offset = 0.0, duration = 10.0)
+    audio_2, _ = librosa.load(file_2)
 
     #finding mfccs
     mfccs_1 = librosa.feature.mfcc(y = audio_1, sr = sr, n_mfcc = 13)

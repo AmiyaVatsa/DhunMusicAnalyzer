@@ -2,8 +2,7 @@ import plotly.graph_objects as go
 import numpy as np #ver < 2.0, kaleido
 import librosa 
 import IPython.display as ipd
-import matplotlib.pyplot as plt
-import os 
+import matplotlib.pyplot as plt 
 import librosa.display
 import tqdm
 
