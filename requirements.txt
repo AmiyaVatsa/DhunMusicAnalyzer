@@ -26,7 +26,7 @@ numba==0.60.0
 numpy==1.26.4
 packaging==24.1
 parso==0.8.4
-pillow==10.3.0
+pillow==13.0.0
 platformdirs==4.2.2
 plotly==5.22.0
 pooch==1.8.2
